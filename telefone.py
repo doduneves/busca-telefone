@@ -13,6 +13,12 @@ arquivo = open(ARQUIVO, "r")
 palavras = arquivo.readlines()
 arquivo.close()
 
+palavraExcesso = 0
+for p in palavras:
+        if len(p)-1 < 1 or len(p)-1 > 30:
+                palavraExcesso = 1
+                palavras.remove(p)
+
 # Crio um dicionario do alfabeto maiusculo
 alfabeto = {}
 
@@ -39,7 +45,7 @@ def buscaDoInicio(letra):
 	return letra
 
 # Metodo que chuto um provavel valor onde esta minha letra no array numerosTel
-def buscaChute(letra):
+def buscaPaginada(letra):
 	if alfabeto.get(letra) == None:
 		if testeTempo: sleep(0.005)
 		return letra
@@ -71,6 +77,8 @@ def mostraResultado(arrPalavras, metodoBusca):
 		print ("Tempo de execucao: %f" % (time() - inicio))
 		print("----------------------------------\n")
 
-
-mostraResultado(palavras, buscaChute)
+if palavraExcesso: print("Atencao, ha palavras fora do limite de 1 a 30 caracteres no arquivo!\n")
+        
+mostraResultado(palavras, buscaPaginada)
 #mostraResultado(palavras, buscaDoInicio)
+
